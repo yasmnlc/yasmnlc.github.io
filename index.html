@@ -1,8 +1,247 @@
-<div style="position: relative; width: 100%; height: 0; padding-top: 177.7778%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https://www.canva.com/design/DAGqptLmi4I/vf7aQRurhgjXBiUk7p-SLA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGqptLmi4I&#x2F;vf7aQRurhgjXBiUk7p-SLA&#x2F;view?utm_content=DAGqptLmi4I&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">CONVITE ESPECIAL!</a> de Yasmin Lima Costa
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Casamento</title>
+    <style>
+        /* Remove margens e define o fundo */
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5; /* Cor de fundo para quem abrir no PC */
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Container que imita a tela de um celular */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Tela do Envelope (Fica por cima de tudo) */
+        #envelope-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-image: url('static/envelope.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 10;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            /* Removemos o display flex que centralizava o botão antigo */
+        }
+
+        /* Classe que faz o envelope sumir suavemente */
+        .esconder-envelope {
+            opacity: 0;
+            transform: translateY(-50px);
+            pointer-events: none;
+        }
+
+        /* Convite Longo */
+        #convite-screen {
+            width: 100%;
+            display: block;
+        }
+        
+        #convite-screen img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Estilo do Contador Regressivo */
+        #contador {
+            position: absolute;
+            
+            /* DICA DE OURO: Ajuste esse número para descer o contador. 
+               Como no print ele está em 15% (em cima do texto), tente algo
+               entre 40% e 48% para ele ficar abaixo da data do casamento! */
+            top: 48%; 
+            
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 32px; /* Espaçamento entre os números */
+            text-align: center;
+            z-index: 5;
+            color: #5c4475; /* Cor roxa combinando com a arte */
+            font-family: 'Georgia', 'Times New Roman', serif; /* Fonte mais clássica/elegante */
+        }
+
+        .tempo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Fundo branco e bordas removidos para ficar transparente e delicado */
+        }
+
+        .numero {
+            font-size: 40px; /* Número um pouco maior */
+            font-weight: normal; /* Tiramos o negrito pesado */
+            display: block;
+        }
+
+        .legenda {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px; /* Deixa as letrinhas mais espaçadas e chiques */
+            margin-top: 5px;
+            opacity: 0.8; /* Deixa o texto da legenda sutilmente mais claro */
+        }
+
+        /* O botão invisível */
+        #botao-invisivel {
+            position: absolute;
+            cursor: pointer;
+            
+            /* DICA DE OURO: Descomente a linha abaixo (tire as barrinhas e asteriscos) 
+               para o botão ficar VERMELHO. Assim você vê onde ele está e ajusta as 
+               porcentagens abaixo até encaixar perfeitamente no selo da sua imagem. 
+               Depois, apague a linha novamente para ele voltar a ser invisível! */
+               
+            /* border: 2px solid red; background: rgba(255,0,0,0.3); */
+
+            /* Ajuste essas medidas para posicionar o botão em cima do seu selo */
+            top: 39%;    /* Move para cima ou para baixo */
+            left: 48%;   /* Move para a esquerda ou direita */
+            width: 20%;  /* Largura da área clicável */
+            height: 11%; /* Altura da área clicável */
+        }
+
+        /* Garante que os botões fiquem presos na imagem */
+        .convite-interativo {
+            position: relative;
+            width: 100%;
+        }
+
+        /* Estilo base para todos os 4 botões */
+        .btn-icone {
+            position: absolute;
+            cursor: pointer;
+            display: block;
+            border-radius: 50%; /* Deixa a área de clique redonda igual ao seu ícone */
+            
+            /* DICA DE OURO: Descomente a linha abaixo para ver os botões em AZUL. 
+               Assim você ajusta o tamanho e a altura (top) para encaixar perfeitamente. 
+               Depois apague para ficarem invisíveis! */
+            /* border: 2px solid blue; background: rgba(0,0,255,0.3); */
+
+            /* Tamanho da área de clique */
+            width: 19%; 
+            height: 5%; /* Se a área ficar muito esticada ou achatada, ajuste essa porcentagem */
+            
+            /* A ALTURA: Como todos estão na mesma linha, o 'top' é igual para todos.
+               Você precisará testar esse número. Como a imagem é longa, pode ser 60%, 75%, 82%... */
+            top: 82.7%; 
+        }
+
+        /* Posição horizontal de cada botão individualmente (da esquerda para a direita) */
+        #btn-presenca   { left: 7%; }
+        #btn-cerimonia  { left: 30%; }
+        #btn-recepcao   { left: 53%; }
+        #btn-presentes  { left: 77%; }
+
+        @keyframes pulsar {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="container">
+        
+        <audio id="musica-fundo" src="static/musica.mp3" loop></audio>
+
+        <div id="envelope-screen">
+            <div id="botao-invisivel" onclick="abrirConvite()"></div>
+        </div>
+
+        <div id="convite-screen">
+
+            <div class="convite-interativo">
+                
+                <!-- A Imagem do Canva longa -->
+                <img src="static/convite.png" alt="Convite de Casamento">
+                
+                <!-- OS 4 BOTÕES INVISÍVEIS -->
+                <!-- Substitua o # pelo link real de cada botão -->
+                <a href="https://wa.link/4b5a51" target="_blank" id="btn-presenca" class="btn-icone"></a>
+                <a href="https://maps.app.goo.gl/VoPWoT2SdHxdfTMa7" target="_blank" id="btn-cerimonia" class="btn-icone"></a>
+                <a href="https://maps.app.goo.gl/jX6aavVDDyRqx2xJ7" target="_blank" id="btn-recepcao" class="btn-icone"></a>
+                <a href="https://forms.gle/SLRji7wdR3axcARc6" target="_blank" id="btn-presentes" class="btn-icone"></a>
+            
+            <!-- O Contador (Elegante e Transparente) -->
+            <div id="contador">
+                <div class="tempo-box">
+                    <span class="numero" id="dias">00</span>
+                    <span class="legenda">Dias</span>
+                </div>
+                <div class="tempo-box">
+                    <span class="numero" id="horas">00</span>
+                    <span class="legenda">Horas</span>
+                </div>
+                <div class="tempo-box">
+                    <span class="numero" id="minutos">00</span>
+                    <span class="legenda">Minutos</span>
+                </div>
+                <div class="tempo-box">
+                    <span class="numero" id="segundos">00</span>
+                    <span class="legenda">Segundos</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Função para abrir o convite e tocar a música
+        function abrirConvite() {
+            // 1. Esconde o envelope
+            document.getElementById('envelope-screen').classList.add('esconder-envelope');
+            
+            // 2. Toca a música (como o usuário clicou, o navegador permite)
+            let musica = document.getElementById('musica-fundo');
+            musica.play();
+        }
+
+        // Data atualizada de acordo com o seu convite
+        const dataCasamento = new Date("October 10, 2026 18:00:00").getTime();
+
+        const atualizarContador = setInterval(function() {
+            const agora = new Date().getTime();
+            const distancia = dataCasamento - agora;
+
+            // Cálculos de tempo incluindo segundos
+            const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+            // Atualiza os elementos na tela
+            document.getElementById("dias").innerText = dias < 10 ? "0" + dias : dias;
+            document.getElementById("horas").innerText = horas < 10 ? "0" + horas : horas;
+            document.getElementById("minutos").innerText = minutos < 10 ? "0" + minutos : minutos;
+            document.getElementById("segundos").innerText = segundos < 10 ? "0" + segundos : segundos;
+
+            // Se a data já passou
+            if (distancia < 0) {
+                clearInterval(atualizarContador);
+                document.getElementById("contador").innerHTML = "<div class='tempo-box'><span class='numero'>Chegou o grande dia!</span></div>";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
