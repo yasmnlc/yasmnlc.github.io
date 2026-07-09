@@ -123,6 +123,17 @@
             width: 100%;
         }
 
+        /* Esconde o contador e botões até a imagem carregar */
+        #contador, .btn-icone {
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out; /* Efeito de surgimento suave */
+        }
+
+        /* Classe que o JavaScript vai adicionar para revelar tudo */
+        .revelar-elementos {
+            opacity: 1 !important;
+        }
+
         /* Estilo base para todos os 4 botões */
         .btn-icone {
             position: absolute;
@@ -173,7 +184,7 @@
             <div class="convite-interativo">
                 
                 <!-- A Imagem do Canva longa -->
-                <img src="static/convite.png" alt="Convite de Casamento">
+                <img src="static/convite.png" alt="Convite de Casamento" onload="mostrarConteudo()">
                 
                 <!-- OS 4 BOTÕES INVISÍVEIS -->
                 <!-- Substitua o # pelo link real de cada botão -->
@@ -214,6 +225,18 @@
             // 2. Toca a música (como o usuário clicou, o navegador permite)
             let musica = document.getElementById('musica-fundo');
             musica.play();
+        }
+
+        // Função que é acionada automaticamente quando a imagem do convite termina de carregar
+        function mostrarConteudo() {
+            // Faz o contador aparecer
+            document.getElementById('contador').classList.add('revelar-elementos');
+            
+            // Faz os botões invisíveis ficarem ativos no lugar certo
+            let botoes = document.querySelectorAll('.btn-icone');
+            botoes.forEach(function(botao) {
+                botao.classList.add('revelar-elementos');
+            });
         }
 
         // Data atualizada de acordo com o seu convite
