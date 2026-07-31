@@ -170,30 +170,41 @@
         /* Aviso de Scroll Animado */
         #aviso-scroll {
             position: fixed;
-            bottom: 30px; /* Distância do fundo da tela */
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            text-align: center;
-            color: #5c4475; /* O mesmo roxo do convite */
+            
+            /* O Layout Horizontal */
+            display: flex; 
+            align-items: center; 
+            gap: 12px; /* Espaço entre as setas e o texto */
+            
+            /* O Fundo Pílula Delicada */
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 6px 20px; /* Mais fininha na altura (6px) e um pouco mais larga (20px) */
+            border-radius: 30px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1); /* Sombra suave */
+            
+            color: #5c4475; 
             font-family: 'Georgia', 'Times New Roman', serif;
             z-index: 20;
-            opacity: 0; /* Começa invisível, só aparece quando o envelope abrir */
+            opacity: 0; 
             transition: opacity 0.5s ease-in-out;
-            pointer-events: none; /* Para não atrapalhar caso o usuário clique em cima dele */
+            pointer-events: none;
         }
 
-        .seta-baixo {
-            font-size: 24px;
+        .seta{
+            font-size: 14px;
             display: block;
             animation: pular 1.5s infinite; /* Chama a animação de pulo */
         }
 
         #aviso-scroll p {
             font-size: 10px;
-            margin: 5px 0 0 0;
+            margin: 0;
             letter-spacing: 2px;
             text-transform: uppercase;
-            opacity: 0.8;
+            font-weight: bold; /* Deixa a letra um pouco mais forte */
         }
 
         /* A mágica da animação de pulo */
@@ -235,16 +246,16 @@
 
             <div class="convite-interativo">
                 
-                <!-- A Imagem do Canva longa -->
+                <!-- Imagem longa do Canva -->
                 <img src="static/convite.png" alt="Convite de Casamento" onload="mostrarConteudo()">
                 
-                <!-- OS 4 BOTÕES INVISÍVEIS -->
+                <!-- BOTÕES INVISÍVEIS -->
                 <a href="https://wa.link/4b5a51" target="_blank" id="btn-presenca" class="btn-icone"></a>
                 <a href="https://maps.app.goo.gl/VoPWoT2SdHxdfTMa7" target="_blank" id="btn-cerimonia" class="btn-icone"></a>
-                <a href="https://maps.app.goo.gl/jX6aavVDDyRqx2xJ7" target="_blank" id="btn-recepcao" class="btn-icone"></a>
+                <a href="https://maps.app.goo.gl/gdT8BKfaAVfjbi9x6" target="_blank" id="btn-recepcao" class="btn-icone"></a>
                 <a href="https://forms.gle/SLRji7wdR3axcARc6" target="_blank" id="btn-presentes" class="btn-icone"></a>
             
-            <!-- O Contador -->
+            <!-- Contador -->
             <div id="contador">
                 <div class="tempo-box">
                     <span class="numero" id="dias">00</span>
@@ -265,8 +276,9 @@
             </div>
 
             <div id="aviso-scroll">
-                    <span class="seta-baixo">↓</span>
+                    <span class="seta">↓</span>
                     <p>Deslize para ver mais</p>
+                    <span class="seta">↓</span>
             </div>
 
         </div>
