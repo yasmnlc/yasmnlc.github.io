@@ -25,19 +25,22 @@
             overflow: hidden;
         }
 
-        /* Tela do Envelope (Fica por cima de tudo) */
+        /* Tela do Envelope */
         #envelope-screen {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
+            height: 100dvh;
+            
+            background-color: #f6f7eb; 
             background-image: url('static/envelope.png');
-            background-size: cover;
+            background-size: contain; 
+            background-repeat: no-repeat; 
             background-position: center;
             z-index: 10;
             transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-            /* Removemos o display flex que centralizava o botão antigo */
         }
 
         /* Classe que faz o envelope sumir suavemente */
@@ -204,7 +207,8 @@
             margin: 0;
             letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: bold; /* Deixa a letra um pouco mais forte */
+            font-weight: bold;
+            white-space: nowrap;
         }
 
         /* A mágica da animação de pulo */
