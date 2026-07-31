@@ -371,6 +371,21 @@
             }, 1000);
         }
 
+        const musica = document.getElementById('musica-fundo');
+        let estavaTocando = false;
+
+        // Monitora se o convidado está olhando para a aba ou não
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                estavaTocando = !musica.paused;
+                musica.pause();
+            } else {
+                if (estavaTocando) {
+                    musica.play();
+                }
+            }
+        });
+
     </script>
 
 </body>
