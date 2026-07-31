@@ -166,11 +166,63 @@
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
+
+        /* Aviso de Scroll Animado */
+        #aviso-scroll {
+            position: fixed;
+            bottom: 30px; /* Distância do fundo da tela */
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #5c4475; /* O mesmo roxo do convite */
+            font-family: 'Georgia', 'Times New Roman', serif;
+            z-index: 20;
+            opacity: 0; /* Começa invisível, só aparece quando o envelope abrir */
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none; /* Para não atrapalhar caso o usuário clique em cima dele */
+        }
+
+        .seta-baixo {
+            font-size: 24px;
+            display: block;
+            animation: pular 1.5s infinite; /* Chama a animação de pulo */
+        }
+
+        #aviso-scroll p {
+            font-size: 10px;
+            margin: 5px 0 0 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* A mágica da animação de pulo */
+        @keyframes pular {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Classe que o JavaScript usará para mostrar o aviso */
+        .mostrar-scroll {
+            opacity: 1 !important;
+        }
+
+        /* Classe que o JavaScript usará para esconder o aviso ao rolar */
+        .esconder-scroll {
+            opacity: 0 !important;
+        }
+
+        /* Impede o scroll enquanto o envelope estiver fechado */
+        .travar-scroll {
+            overflow: hidden !important;
+            height: 100vh; /* Trava a altura exatamente no tamanho da tela do dispositivo */
+        }
+
     </style>
 </head>
-<body>
+<body class="travar-scroll">
     
-
     <div class="container">
         
         <audio id="musica-fundo" src="static/musica.mp3" loop></audio>
@@ -187,13 +239,12 @@
                 <img src="static/convite.png" alt="Convite de Casamento" onload="mostrarConteudo()">
                 
                 <!-- OS 4 BOTÕES INVISÍVEIS -->
-                <!-- Substitua o # pelo link real de cada botão -->
                 <a href="https://wa.link/4b5a51" target="_blank" id="btn-presenca" class="btn-icone"></a>
                 <a href="https://maps.app.goo.gl/VoPWoT2SdHxdfTMa7" target="_blank" id="btn-cerimonia" class="btn-icone"></a>
                 <a href="https://maps.app.goo.gl/jX6aavVDDyRqx2xJ7" target="_blank" id="btn-recepcao" class="btn-icone"></a>
                 <a href="https://forms.gle/SLRji7wdR3axcARc6" target="_blank" id="btn-presentes" class="btn-icone"></a>
             
-            <!-- O Contador (Elegante e Transparente) -->
+            <!-- O Contador -->
             <div id="contador">
                 <div class="tempo-box">
                     <span class="numero" id="dias">00</span>
@@ -212,6 +263,12 @@
                     <span class="legenda">Segundos</span>
                 </div>
             </div>
+
+            <div id="aviso-scroll">
+                    <span class="seta-baixo">↓</span>
+                    <p>Deslize para ver mais</p>
+            </div>
+
         </div>
 
     </div>
@@ -225,6 +282,11 @@
             // 2. Toca a música (como o usuário clicou, o navegador permite)
             let musica = document.getElementById('musica-fundo');
             musica.play();
+
+            // 3. Mostra o aviso de scroll depois de 1 segundo (tempo do envelope sumir)
+            setTimeout(function() {
+                document.getElementById('aviso-scroll').classList.add('mostrar-scroll');
+            }, 1000);
         }
 
         // Função que é acionada automaticamente quando a imagem do convite termina de carregar
@@ -264,7 +326,37 @@
                 document.getElementById("contador").innerHTML = "<div class='tempo-box'><span class='numero'>Chegou o grande dia!</span></div>";
             }
         }, 1000);
+
+        // Detecta quando a pessoa começa a rolar a página
+        window.addEventListener('scroll', function() {
+            let aviso = document.getElementById('aviso-scroll');
+            
+            // Se a pessoa desceu mais de 200 pixels da página inicial
+            if (window.scrollY > 500) {
+                aviso.classList.remove('mostrar-scroll');
+                aviso.classList.add('esconder-scroll');
+            }
+        });
+
+        function abrirConvite() {
+            // Destrava a página, permitindo a rolagem
+            document.body.classList.remove('travar-scroll');
+            
+            // 1. Esconde o envelope
+            document.getElementById('envelope-screen').classList.add('esconder-envelope');
+            
+            // 2. Toca a música
+            let musica = document.getElementById('musica-fundo');
+            musica.play();
+
+            // 3. Mostra o aviso de scroll depois de 1 segundo (tempo do envelope sumir)
+            setTimeout(function() {
+                document.getElementById('aviso-scroll').classList.add('mostrar-scroll');
+            }, 1000);
+        }
+
     </script>
 
 </body>
 </html>
+ 
